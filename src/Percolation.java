@@ -1,6 +1,3 @@
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 import java.util.ArrayList;
@@ -121,21 +118,21 @@ public class Percolation {
 
     public static void main(String[] args) {
 //        Stopwatch stopwatch = new Stopwatch();
-//
+
 //        In in = new In("greeting57.txt");
 //        int n = in.readInt();
-//
+
 //        Percolation p = new Percolation(n);
 //        while (!in.isEmpty()) {
 //            int i = in.readInt();
 //            int j = in.readInt();
 //            p.open(i, j);
-//
+
 //            if(p.percolates()) {
 //                break;
 //            }
 //        }
-//
+
 //        System.out.println(p.percolates());
 //        System.out.println(stopwatch.elapsedTime());
     }
