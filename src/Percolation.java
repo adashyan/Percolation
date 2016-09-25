@@ -10,7 +10,6 @@ public class Percolation {
     private ArrayList<Integer> open = new ArrayList<>();
 
     public Percolation(int n) {
-        // create n-by-n grid, with all sites blocked
         if (n <= 0) {
             throw new IllegalArgumentException(n + " should be more then 0");
         }
@@ -33,12 +32,7 @@ public class Percolation {
             uf.union(current, 0);
         }
 
-        if (i == number) {
-            uf.union(current, count + 1);
-        }
-
         ArrayList<Integer> neighbors = getNeighbors(current);
-
         neighbors.stream().filter(this::isOpen).forEach(n -> uf.union(current, n));
     }
 
@@ -59,12 +53,19 @@ public class Percolation {
         if (current <= number && isOpen(current)) {
             return true;
         }
-//        return uf.connected(current, 0);// && uf.connected(current, count+1);
+
         return uf.connected(current, 0);
     }
 
-    public boolean percolates() {
-        return uf.connected(0, count + 1);
+    public boolean percolates()
+    {
+        for (int i = 1; i <= number; i++) {
+            if (isFull(number, i)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private int getNumber(int i, int j) {
@@ -109,29 +110,26 @@ public class Percolation {
         return open.contains(current);
     }
 
-    private boolean isValid(int i, int j) {
+    private void isValid(int i, int j) {
         if ((i <= 0) || (i > count) || (j <= 0) || (j > count)) {
             throw new IndexOutOfBoundsException("");
         }
-
-        return true;
     }
 
     public static void main(String[] args) {
         // test client (optional)
-        Percolation percolation = new Percolation(5);
-
-        percolation.open(2, 1);
-        percolation.open(1, 1);
-        percolation.open(2, 2);
-        percolation.open(3, 2);
-        percolation.open(4, 2);
-        percolation.open(4, 3);
-        percolation.open(4, 4);
-        percolation.open(4, 5);
-        percolation.open(5, 5);
+//        Percolation percolation = new Percolation(5);
+//        percolation.open(2, 1);
+//        percolation.open(1, 1);
+//        percolation.open(2, 2);
+//        percolation.open(3, 2);
+//        percolation.open(4, 2);
+//        percolation.open(4, 3);
+//        percolation.open(4, 4);
+//        percolation.open(4, 5);
+//        percolation.open(5, 5);
 //        percolation.isFull(4,5);
-        System.out.println(percolation.percolates());
+//        System.out.println(percolation.percolates());
     }
 
 }
