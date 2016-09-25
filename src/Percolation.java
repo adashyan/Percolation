@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class Percolation {
         }
         number = n;
         uf = new WeightedQuickUnionUF(n * n + 1);
-        count = uf.count() - 1;
+        count = n * n;
 
         opens = new int[count+1];
 
@@ -30,9 +32,11 @@ public class Percolation {
 
         int current = getNumber(i, j);
 
-        if (!isOpen(i, j)) {
-            opens[current] = current;
+        if (isOpen(current)) {
+            return;
         }
+
+        opens[current] = current;
 
         if (i == 1) {
             uf.union(current, 0);
@@ -56,7 +60,7 @@ public class Percolation {
             return false;
         }
 
-        if (current <= number && isOpen(current)) {
+        if (current <= number) {
             return true;
         }
 
