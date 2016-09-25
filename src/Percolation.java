@@ -107,11 +107,12 @@ public class Percolation {
     }
 
     private void isValid(int i, int j) {
-        if (i <= 0 || i > count) {
+
+        if (i <= 0 || i > number) {
             throw new IndexOutOfBoundsException("");
         }
 
-        if (j <= 0 || j > count) {
+        if (j <= 0 || j > number) {
             throw new IndexOutOfBoundsException("");
         }
     }
