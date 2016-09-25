@@ -59,8 +59,8 @@ public class Percolation {
         if (current <= number && isOpen(current)) {
             return true;
         }
-
-        return uf.connected(current, 0);// && uf.connected(current, count+1);
+//        return uf.connected(current, 0);// && uf.connected(current, count+1);
+        return uf.connected(current, 0);
     }
 
     public boolean percolates() {

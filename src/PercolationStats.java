@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.StdStats;
 public class PercolationStats {
 
 
-    private double percentage[];
+    private double[] percentage;
     private double mean;
     private double stdev;
     private int number;
@@ -73,7 +73,7 @@ public class PercolationStats {
 
         int n = Integer.parseInt(args[0]);
         int trials = Integer.parseInt(args[1]);
-//
+
 //        int n = 200;
 //        int trials = 200;
 
@@ -81,6 +81,7 @@ public class PercolationStats {
 
         StdOut.println("mean                    = " + Double.toString(ps.mean()));
         StdOut.println("stddev                  = " + Double.toString(ps.stddev()));
-        StdOut.println("95% confidence interval = " + Double.toString(ps.confidenceLo()) + ", " + Double.toString(ps.confidenceHi()));
+        StdOut.println("95% confidence interval = " + Double.toString(ps.confidenceLo()) +
+                ", " + Double.toString(ps.confidenceHi()));
     }
 }
