@@ -30,7 +30,6 @@ public class PercolationStats {
 
             while (!isPercolates) {
 
-
                 int row    = StdRandom.uniform(1, n + 1);
                 int column = StdRandom.uniform(1, n + 1);
 

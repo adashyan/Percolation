@@ -1,3 +1,6 @@
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 import java.util.ArrayList;
@@ -7,15 +10,21 @@ public class Percolation {
     private WeightedQuickUnionUF uf;
     private int count;
     private int number;
-    private ArrayList<Integer> open = new ArrayList<>();
+    private int[] opens;
 
     public Percolation(int n) {
         if (n <= 0) {
             throw new IllegalArgumentException(n + " should be more then 0");
         }
         number = n;
-        uf = new WeightedQuickUnionUF(n * n + 2);
-        count = uf.count() - 2;
+        uf = new WeightedQuickUnionUF(n * n + 1);
+        count = uf.count() - 1;
+
+        opens = new int[count+1];
+
+        for (int i = 0; i < count; i++) {
+            opens[i] = 0;
+        }
     }
 
     public void open(int i, int j) {
@@ -25,14 +34,14 @@ public class Percolation {
         int current = getNumber(i, j);
 
         if (!isOpen(i, j)) {
-            open.add(current);
+            opens[current] = current;
         }
 
         if (i == 1) {
             uf.union(current, 0);
         }
 
-        ArrayList<Integer> neighbors = getNeighbors(current);
+        ArrayList<Integer> neighbors = getNeighbors(i, j);
         neighbors.stream().filter(this::isOpen).forEach(n -> uf.union(current, n));
     }
 
@@ -72,64 +81,63 @@ public class Percolation {
         return number * i - (number - j);
     }
 
-    private ArrayList<Integer> getNeighbors(int current) {
-        int[] position = getPosition(current);
+    private ArrayList<Integer> getNeighbors(int i, int j) {
+        int current = getNumber(i, j);
+
         ArrayList<Integer> neighbors = new ArrayList<>();
 
-        if (position[0] < number) {
+        if (i < number) {
             neighbors.add(current + number);
         }
 
-        if (position[0] > 1) {
+        if (i > 1) {
             neighbors.add(current - number);
         }
 
-        if (position[1] > 1) {
+        if (j > 1) {
             neighbors.add(current - 1);
         }
 
-        if (position[1] < number) {
+        if (j < number) {
             neighbors.add(current + 1);
         }
 
         return neighbors;
     }
 
-    private int[] getPosition(int current) {
-        int column = current % number;
-        int row = ((current - column) / number) + (column == 0 ? 0 : 1);
-
-        if (column == 0) {
-            column = number;
-        }
-
-        return new int[]{row, column};
-    }
-
     private boolean isOpen(int current) {
-        return open.contains(current);
+        return opens[current] > 0;
     }
 
     private void isValid(int i, int j) {
-        if ((i <= 0) || (i > count) || (j <= 0) || (j > count)) {
+        if (i <= 0 || i > count) {
+            throw new IndexOutOfBoundsException("");
+        }
+
+        if (j <= 0 || j > count) {
             throw new IndexOutOfBoundsException("");
         }
     }
 
     public static void main(String[] args) {
-        // test client (optional)
-//        Percolation percolation = new Percolation(5);
-//        percolation.open(2, 1);
-//        percolation.open(1, 1);
-//        percolation.open(2, 2);
-//        percolation.open(3, 2);
-//        percolation.open(4, 2);
-//        percolation.open(4, 3);
-//        percolation.open(4, 4);
-//        percolation.open(4, 5);
-//        percolation.open(5, 5);
-//        percolation.isFull(4,5);
-//        System.out.println(percolation.percolates());
+//        Stopwatch stopwatch = new Stopwatch();
+//
+//        In in = new In("greeting57.txt");
+//        int n = in.readInt();
+//
+//        Percolation p = new Percolation(n);
+//        while (!in.isEmpty()) {
+//            int i = in.readInt();
+//            int j = in.readInt();
+//            p.open(i, j);
+//
+//            if(p.percolates()) {
+//                break;
+//            }
+//        }
+//
+//        System.out.println(p.percolates());
+//        System.out.println(stopwatch.elapsedTime());
     }
 
 }
