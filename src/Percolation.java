@@ -1,5 +1,3 @@
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 import java.util.ArrayList;
@@ -16,8 +14,9 @@ public class Percolation {
             throw new IllegalArgumentException(n + " should be more then 0");
         }
         number = n;
-        uf = new WeightedQuickUnionUF(n * n + 1);
         count = n * n;
+
+        uf = new WeightedQuickUnionUF(count + 1);
 
         opens = new int[count+1];
 
@@ -36,7 +35,7 @@ public class Percolation {
             return;
         }
 
-        opens[current] = current;
+        opens[current] = 1;
 
         if (i == 1) {
             uf.union(current, 0);
