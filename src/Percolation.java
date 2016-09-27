@@ -16,7 +16,7 @@ public class Percolation {
         number = n;
         count = n * n;
 
-        uf = new WeightedQuickUnionUF(count + 1);
+        uf = new WeightedQuickUnionUF(count + 2);
 
         opens = new int[count+1];
 
@@ -41,6 +41,10 @@ public class Percolation {
             uf.union(current, 0);
         }
 
+        if (i == number) {
+            uf.union(current, count + 1);
+        }
+
         ArrayList<Integer> neighbors = getNeighbors(i, j);
         neighbors.stream().filter(this::isOpen).forEach(n -> uf.union(current, n));
     }
@@ -63,18 +67,16 @@ public class Percolation {
             return true;
         }
 
+        if (i == number) {
+
+        }
+
         return uf.connected(current, 0);
     }
 
     public boolean percolates()
     {
-        for (int i = 1; i <= number; i++) {
-            if (isFull(number, i)) {
-                return true;
-            }
-        }
-
-        return false;
+        return  uf.connected(0, count+1);
     }
 
     private int getNumber(int i, int j) {
@@ -123,19 +125,12 @@ public class Percolation {
     public static void main(String[] args) {
 //        Stopwatch stopwatch = new Stopwatch();
 
-//        In in = new In("greeting57.txt");
-//        int n = in.readInt();
+//        Percolation p = new Percolation(10);
 
-//        Percolation p = new Percolation(n);
-//        while (!in.isEmpty()) {
-//            int i = in.readInt();
-//            int j = in.readInt();
-//            p.open(i, j);
-
-//            if(p.percolates()) {
-//                break;
-//            }
-//        }
+//        p.open(1,1);
+//        p.open(1,2);
+//        p.open(2,2);
+//        p.open(10,1);
 
 //        System.out.println(p.percolates());
 //        System.out.println(stopwatch.elapsedTime());
